@@ -20,6 +20,8 @@ def download(vidinfo):
 
     yt_url = yt_base_url+vidinfo.yt_id
 
+    duration = str(int(vidinfo.end_time) - int(vidinfo.start_time))
+
     ydl_opts = {
         'format': '22/18',
         'quiet': True,
@@ -35,7 +37,7 @@ def download(vidinfo):
     try:
         (
             ffmpeg
-                .input(download_url, ss=vidinfo.start_time, to=vidinfo.end_time)
+                .input(download_url, ss=vidinfo.start_time, t=duration)
                 .output(vidinfo.out_filename, format='mp4', r=25, vcodec='libx264',
                         crf=18, preset='veryfast', pix_fmt='yuv420p', acodec='aac', audio_bitrate=128000,
                         strict='experimental')
