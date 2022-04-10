@@ -49,7 +49,7 @@ def download(vidinfo):
     except:
         return_msg = '{}, ERROR (ffmpeg)!'.format(vidinfo.yt_id)
         return return_msg
-
+    
     return '{}, DONE!'.format(vidinfo.yt_id)
 
 
@@ -65,13 +65,21 @@ if __name__ == '__main__':
         lines = f.readlines()
         lines = [x.split(',') for x in lines]
         vidinfos = [VidInfo(x[0], x[1], x[2], out_dir) for x in lines]
-
+    # train 46669
+    # test 1669
+    vid_num = 1669
+    sub_vidinfos = vidinfos[:vid_num]
+    print('subvidinfo len', len(sub_vidinfos))
     bad_files = open('bad_files_{}.txt'.format(split), 'w')
-    results = ThreadPool(5).imap_unordered(download, vidinfos)
+    file_list = open('{}.txt'.format(split), 'w')
+    results = ThreadPool(5).imap_unordered(download, sub_vidinfos)
     cnt = 0
     for r in results:
         cnt += 1
-        print(cnt, '/', len(vidinfos), r)
+        print(cnt, '/', len(sub_vidinfos), r)
         if 'ERROR' in r:
             bad_files.write(r + '\n')
+        else:
+            file_list.write(r[:-7] + '\n')
     bad_files.close()
+    file_list.close()
