@@ -67,7 +67,15 @@ if __name__ == '__main__':
         vidinfos = [VidInfo(x[0], x[1], x[2], out_dir) for x in lines]
     # train 46669
     # test 1669
-    vid_num = 1669
+    
+    # 9969
+    # 369
+    if split == 'train':
+        vid_num = 9969
+    elif split == 'test':
+        vid_num = 369
+    else:
+        print("split name should be train or test")
     sub_vidinfos = vidinfos[:vid_num]
     print('subvidinfo len', len(sub_vidinfos))
     bad_files = open('bad_files_{}.txt'.format(split), 'w')
