@@ -15,7 +15,7 @@ def make_pairs(file_list):
     for idx, filename in enumerate(file_list):
         for i in range (1, 11):
             idx_pair = (idx + i) % len(file_list)
-            pair_str = filename[:-4] + ' ' + file_list[idx_pair]
+            pair_str = filename + ' ' + file_list[idx_pair]
             # print(pair_str)
             pair_list.append(pair_str)
     return pair_list
